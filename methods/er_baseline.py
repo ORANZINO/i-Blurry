@@ -69,7 +69,7 @@ class ER:
 
         self.model = select_model(self.model_name, self.dataset, 1).to(self.device)
         self.optimizer = select_optimizer(self.opt_name, self.lr, self.model)
-        if 'imagenet' in self.dataset:
+        if 'imagenet' or 'caltech' in self.dataset:
             self.lr_gamma = 0.99995
         else:
             self.lr_gamma = 0.9999
@@ -85,7 +85,7 @@ class ER:
         self.batch_size = kwargs["batchsize"]
 
         self.start_time = time.time()
-        num_samples = {'cifar10': 50000, 'cifar100': 50000, 'tinyimagenet': 100000, 'imagenet': 1281167}
+        num_samples = {'cifar10': 50000, 'cifar100': 50000, 'tinyimagenet': 100000, 'imagenet': 1281167, 'caltech256': 15360}
         self.total_samples = num_samples[self.dataset]
 
     def online_step(self, sample, sample_num, n_worker):
