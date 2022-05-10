@@ -10,7 +10,7 @@ from methods.clib import CLIB
 logger = logging.getLogger()
 
 
-def select_method(args, criterion, device, train_transform, test_transform, n_classes):
+def select_method(args, criterion, device, train_transform, test_transform, n_classes, pretrained=False):
     kwargs = vars(args)
     if args.mode == "er":
         method = ER(
@@ -74,6 +74,7 @@ def select_method(args, criterion, device, train_transform, test_transform, n_cl
             train_transform=train_transform,
             test_transform=test_transform,
             n_classes=n_classes,
+            pretrained=pretrained,
             **kwargs,
         )
     else:

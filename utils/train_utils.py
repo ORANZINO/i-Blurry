@@ -2,7 +2,7 @@ import torch_optimizer
 from easydict import EasyDict as edict
 from torch import optim
 
-from models import mnist, cifar, imagenet
+from models import mnist, cifar, imagenet, caltech
 
 
 def cycle(iterable):
@@ -51,7 +51,7 @@ def select_scheduler(sched_name, opt, hparam=None):
     return scheduler
 
 
-def select_model(model_name, dataset, num_classes=None):
+def select_model(model_name, dataset, num_classes=None, pretrained=False):
     opt = edict(
         {
             "depth": 18,
@@ -67,12 +67,13 @@ def select_model(model_name, dataset, num_classes=None):
             "compression": 0.5,
         }
     )
-
-    if "mnist" in dataset:
+    if "caltech" in dataset:
+        return caltech.resnet34(pretrained)
+    elif "mnist" in dataset:
         model_class = getattr(mnist, "MLP")
     elif "cifar" in dataset:
         model_class = getattr(cifar, "ResNet")
-    elif "imagenet" or "caltech" in dataset:
+    elif "imagenet" in dataset:
         model_class = getattr(imagenet, "ResNet")
     else:
         raise NotImplementedError(

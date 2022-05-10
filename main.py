@@ -104,7 +104,7 @@ def main():
     logger.info(f"[1] Select a CIL method ({args.mode})")
     criterion = nn.CrossEntropyLoss(reduction="mean")
     method = select_method(
-        args, criterion, device, train_transform, test_transform, n_classes
+        args, criterion, device, train_transform, test_transform, n_classes, pretrained=True
     )
 
     logger.info(f"[2] Incrementally training {args.n_tasks} tasks")
