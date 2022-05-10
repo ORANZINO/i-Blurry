@@ -222,3 +222,4 @@ def _resnet(arch, block, layers, pretrained, progress, **kwargs):
 def resnet34(pretrained=False, progress=True, **kwargs):
     model = _resnet('resnet34', BasicBlock, [3, 4, 6, 3], pretrained, progress, **kwargs)
     model.fc = nn.Linear(512, 256)
+    return model
