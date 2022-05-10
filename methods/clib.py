@@ -18,8 +18,8 @@ logger = logging.getLogger()
 writer = SummaryWriter("tensorboard")
 
 class CLIB(ER):
-    def __init__(self, criterion, device, train_transform, test_transform, n_classes, **kwargs):
-        super().__init__(criterion, device, train_transform, test_transform, n_classes, **kwargs)
+    def __init__(self, criterion, device, train_transform, test_transform, n_classes, pretrained=False, **kwargs):
+        super().__init__(criterion, device, train_transform, test_transform, n_classes, pretrained, **kwargs)
         self.memory_size = kwargs["memory_size"]
 
         # Samplewise importance variables
