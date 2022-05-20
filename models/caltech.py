@@ -219,7 +219,18 @@ def _resnet(arch, block, layers, pretrained, progress, **kwargs):
     return model
 
 
-def resnet34(pretrained=False, progress=True, **kwargs):
+def resnet34(pretrained=False, layer_opt='', progress=True, **kwargs):
     model = _resnet('resnet34', BasicBlock, [3, 4, 6, 3], pretrained, progress, **kwargs)
+
+    if layer_opt == 'freeze_all':
+        for param in model.parameters():
+            param.requires_grad = False
+    elif layer_opt == 'freeze_until_layer2':
+        model.conv1.requires_grad = False
+        model.layer1.requires_grad = False
+        model.layer2.requires_grad = False
+    elif layer_opt == 'freeze_conv1':
+        model.conv1.requires_grad = False
+
     model.fc = nn.Linear(512, 256)
     return model

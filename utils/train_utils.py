@@ -51,7 +51,7 @@ def select_scheduler(sched_name, opt, hparam=None):
     return scheduler
 
 
-def select_model(model_name, dataset, num_classes=None, pretrained=False):
+def select_model(model_name, dataset, num_classes=None, pretrained=False, layer_opt=''):
     opt = edict(
         {
             "depth": 18,
@@ -68,7 +68,7 @@ def select_model(model_name, dataset, num_classes=None, pretrained=False):
         }
     )
     if "caltech" in dataset:
-        return caltech.resnet34(pretrained)
+        return caltech.resnet34(pretrained, layer_opt)
     elif "mnist" in dataset:
         model_class = getattr(mnist, "MLP")
     elif "cifar" in dataset:
