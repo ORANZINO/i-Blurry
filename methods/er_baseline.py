@@ -28,7 +28,7 @@ def cycle(iterable):
 
 class ER:
     def __init__(
-            self, criterion, device, train_transform, test_transform, n_classes, pretrained=False, **kwargs
+            self, criterion, device, train_transform, test_transform, n_classes, pretrained=False, layer_opt='', **kwargs
     ):
         self.num_learned_class = 0
         self.num_learning_class = 1
@@ -67,7 +67,7 @@ class ER:
         if self.use_amp:
             self.scaler = torch.cuda.amp.GradScaler()
 
-        self.model = select_model(self.model_name, self.dataset, 1, pretrained).to(self.device)
+        self.model = select_model(self.model_name, self.dataset, 1, pretrained, layer_opt).to(self.device)
         self.optimizer = select_optimizer(self.opt_name, self.lr, self.model)
         if 'imagenet' or 'caltech' in self.dataset:
             self.lr_gamma = 0.99995
