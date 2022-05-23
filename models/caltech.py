@@ -226,11 +226,15 @@ def resnet34(pretrained=False, layer_opt='', progress=True, **kwargs):
         for param in model.parameters():
             param.requires_grad = False
     elif layer_opt == 'freeze_until_layer2':
-        model.conv1.requires_grad = False
-        model.layer1.requires_grad = False
-        model.layer2.requires_grad = False
+        for p in model.conv1.parameters():
+            p.requires_grad = False
+        for p in model.layer1.parameters():
+            p.requires_grad = False
+        for p in model.layer2.parameters():
+            p.requires_grad = False
     elif layer_opt == 'freeze_conv1':
-        model.conv1.requires_grad = False
+        for p in model.conv1.parameters():
+            p.requires_grad = False
 
     model.fc = nn.Linear(512, 256)
     return model
